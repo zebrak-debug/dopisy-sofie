@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Dopisy z Albánie</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Caveat:wght@500;600&display=swap">
+<style>
+/* Layout: one narrow column of three postcards/envelopes, sealed until 7:00 each morning */
+:root{
+  --paper:#eef3f4; --card:#fbfcfb; --ink:#17304a; --muted:#5d7180;
+  --sea:#2b7a96; --stamp:#c6362f; --line:#d3dee2; --seal:#e9eff1; --flap:#d6e3e8; --onstamp:#fff;
+  --display:"Young Serif",Georgia,serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0f1a24; --card:#162533; --ink:#e6eef2; --muted:#93a8b6;
+  --sea:#6cb8d3; --stamp:#ef6b5f; --line:#26394a; --seal:#1b2d3d; --flap:#24405a; --onstamp:#fff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f1a24; --card:#162533; --ink:#e6eef2; --muted:#93a8b6;
+  --sea:#6cb8d3; --stamp:#ef6b5f; --line:#26394a; --seal:#1b2d3d; --flap:#24405a; --onstamp:#fff; color-scheme:dark}
+
+html,body{margin:0}
+img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{-webkit-text-size-adjust:100%;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.6}
+.wrap{max-width:620px;margin:0 auto;padding-block:48px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:28px}
+
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--sea);font-weight:500}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(32px,7vw,44px);line-height:1.1;margin:0;text-wrap:balance}
+.intro{color:var(--muted);margin:0;max-width:52ch}
+
+.letter{position:relative;background:var(--card);border:1px solid var(--line);border-radius:4px;
+  padding:26px 24px 24px;display:flex;flex-direction:column;gap:14px;
+  box-shadow:0 1px 0 var(--line),0 12px 30px -22px rgba(23,48,74,.45)}
+.letter::before{content:"";position:absolute;inset:0 0 auto;height:5px;border-radius:4px 4px 0 0;
+  background:repeating-linear-gradient(135deg,var(--stamp) 0 12px,transparent 12px 20px,var(--sea) 20px 32px,transparent 32px 40px)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.day{font-family:var(--display);font-size:24px;line-height:1.2;margin:0}
+.date{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stamp{flex:none;width:58px;height:68px;border:2px dashed var(--stamp);border-radius:3px;
+  display:grid;place-items:center;text-align:center;color:var(--stamp);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;line-height:1.25;transform:rotate(4deg)}
+.stamp b{display:block;font-family:var(--display);font-size:20px;font-weight:400;letter-spacing:0}
+
+.sealed{background:var(--seal);border-radius:3px;padding:22px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.sealed .lbl{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.count{font-family:var(--display);font-size:clamp(28px,8vw,38px);font-variant-numeric:tabular-nums;color:var(--ink)}
+.sealed .when{font-size:15px;color:var(--muted)}
+
+.env{position:relative;display:block;width:100%;height:200px;padding:0;border:0;border-radius:3px;overflow:hidden;
+  background:var(--seal);color:var(--ink);font:inherit;cursor:pointer;perspective:900px}
+.env::before{content:"";position:absolute;inset:0;background:var(--flap);opacity:.55;clip-path:polygon(0 100%,50% 48%,100% 100%)}
+.env:focus-visible{outline:2px solid var(--sea);outline-offset:3px}
+.flap{position:absolute;inset:0 0 auto;height:62%;background:var(--flap);clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;transition:transform .8s cubic-bezier(.5,0,.3,1);z-index:2}
+.wax{position:absolute;left:50%;top:62%;width:62px;height:62px;margin:-31px 0 0 -31px;border-radius:50%;z-index:3;
+  background:var(--stamp);color:var(--onstamp);display:grid;place-items:center;font-family:var(--hand);font-size:34px;line-height:1;
+  box-shadow:inset 0 0 0 5px rgba(0,0,0,.14),0 3px 8px -2px rgba(0,0,0,.35);transition:transform .45s ease,opacity .45s ease}
+.hint{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);z-index:3;transition:opacity .3s}
+.env:hover .wax{transform:rotate(-8deg) scale(1.05)}
+.env.peeling .wax{transform:translate(40px,-60px) rotate(35deg) scale(.6);opacity:0}
+.env.peeling .flap{transform:rotateX(180deg);transition-delay:.25s}
+.env.peeling .hint{opacity:0}
+@media (prefers-reduced-motion:reduce){.flap,.wax,.hint{transition:none}}
+
+.msg{display:flex;flex-direction:column;gap:12px}
+.msg p{margin:0}
+.greet{font-family:var(--hand);font-size:30px;line-height:1.1;color:var(--sea)}
+.task{border-top:1px dashed var(--line);padding-top:12px;font-size:16px}
+.task span{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--stamp);margin-bottom:2px}
+.sign{font-family:var(--hand);font-size:28px;color:var(--ink);align-self:flex-end;line-height:1}
+
+.open .msg{animation:rise .7s ease both}
+@keyframes rise{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.open .msg{animation:none}}
+
+footer{font-size:14px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Ostrava → Tirana · 950 km</div>
+    <h1>Tři rána, tři obálky</h1>
+    <p class="intro">Dopisy už nejsou v módě, ale ty dostaneš rovnou tři. Cestopisné, láskyplné, s trochou humoru a sarkasmu.</p>
+    <p class="intro">Každé ráno v sedm se tu otevře jedna obálka.</p>
+  </header>
+
+  <main id="letters" style="display:flex;flex-direction:column;gap:28px"></main>
+
+  <footer>Odesláno z Albánie s láskou</footer>
+</div>
+
+<script>
+// Unlock 07:00 Europe/Prague (CET = UTC+1 in November)
+const LETTERS = [
+  {
+    day:"Pátek", unlock:"2026-11-06T06:00:00Z", stamp:"Den 1",
+    greet:"Dobré ráno, Sofiiii",
+    body:[
+      "Jestli tohle čteš, já už jsem nejspíš někde ve vzduchu s trochou alkoholu v žile a ty právě přemýšlíš, jestli jít první běhat nebo do fitka. Samozřejmě máš na miskách vah, jak je fajn se probudit a netrávit další hodinu a půl v posteli. Na druhou stranu myslíš na to, jak by bylo fajn pomazlit svého krásného a teď už i ostříhaného kluka.",
+      "Je trochu divné tohle psát a odjíždět, ale všechno je jednou poprvé. Užij si pátek ráno, myslím na tebe a miluju tě mooooc, fakt moooooc. Jo a seš sexy číča."
+    ],
+    task:"Pošli mi fotku tvého rána. Já ti pošlu to svoje. Snad bude co publikovat :)",
+  },
+  {
+    day:"Sobota", unlock:"2026-11-07T06:00:00Z", stamp:"Den 2",
+    greet:"Sobota bez budíku",
+    body:[
+      "Doufám, že sis přispala a že tohle čteš ještě v posteli. No málo pravděpodobné :D",
+      "Dneska se tu budu trmácet městem, s partou starých a hustých lidí. Určitě toho hodně sníme a vypijem, ale stejně pořád budu myslet na tu mou (po půl roce) otevřenou holku a její herecké výkony. Absolutně miluju.",
+      "Držím ti palce na Slovanu. Myslím, že to bude skvělá zábava, ne jen pro tebe. :)"
+    ],
+    task:"Dej pak vědět, jestli si šla s Davidem nebo Fabošem na fotbal.",
+  },
+  {
+    day:"Neděle", unlock:"2026-11-08T06:00:00Z", stamp:"Den 3",
+    greet:"Poslední obálka",
+    body:[
+      "Předpokládám, že už mě to dneska bolí, ale pár hezkých slov ještě zvládnu.",
+      "Tak a je to tady, podívej se na to. Určitě jsem ti strašně moc chyběl čičinko.",
+      "Díky, žes na mě počkala ty tři dny. A teď si představ, že bys na někoho měla čekat třeba 3 měsíce, hustá představa co?",
+      "Dneska už dostaneš mazlení, pusinky a všechno co máš ráda, třeba i penis, co jááá vííím."
+    ],
+    task:"Jaká pravděpodobnost, že dneska dostaneš magnetku? Co myslíš?",
+  }
+];
+
+const preview = location.hash === "#nahled";
+const root = document.getElementById("letters");
+const fmt = new Intl.DateTimeFormat("cs-CZ",{weekday:"long",day:"numeric",month:"numeric",timeZone:"Europe/Prague"});
+const short = new Intl.DateTimeFormat("cs-CZ",{day:"numeric",month:"long",timeZone:"Europe/Prague"});
+
+function pad(n){return String(n).padStart(2,"0")}
+function countdown(ms){
+  const s=Math.max(0,Math.floor(ms/1000)), d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60), sec=s%60;
+  return (d?d+" d ":"")+pad(h)+":"+pad(m)+":"+pad(sec);
+}
+function esc(t){return t.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+
+const els = LETTERS.map((L,i)=>{
+  const a=document.createElement("article"); a.className="letter"; a.id="dopis-"+(i+1);
+  a.innerHTML=`<div class="top"><div><h2 class="day">${L.day}</h2><div class="date">${short.format(new Date(L.unlock))}</div></div>
+    <div class="stamp">Tirana<b>${i+1}</b>${L.stamp}</div></div><div class="slot"></div>`;
+  root.appendChild(a); return a;
+});
+
+const KEY="dopisy-sofie-otevreno";
+let opened={};
+if(!preview){try{opened=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){opened={}}}
+function save(){if(preview)return;try{localStorage.setItem(KEY,JSON.stringify(opened))}catch(e){}}
+
+function showLetter(i){
+  const L=LETTERS[i], a=els[i];
+  a.dataset.state="open"; a.classList.add("open");
+  a.querySelector(".slot").innerHTML=`<div class="msg"><p class="greet">${esc(L.greet)}</p>${L.body.map(p=>`<p>${esc(p)}</p>`).join("")}
+    <p class="task"><span>Dnešní drobnost</span>${esc(L.task)}</p><p class="sign">Jan</p></div>`;
+}
+function peel(i,btn){
+  if(btn.classList.contains("peeling"))return;
+  btn.classList.add("peeling");
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  setTimeout(()=>{opened[i]=true;save();showLetter(i)},reduce?0:900);
+}
+
+function render(){
+  const now=Date.now();
+  LETTERS.forEach((L,i)=>{
+    const a=els[i], slot=a.querySelector(".slot"), t=new Date(L.unlock).getTime();
+    if(!preview && now<t){
+      const txt=countdown(t-now);
+      if(a.dataset.state==="locked"){slot.querySelector(".count").textContent=txt;return}
+      a.dataset.state="locked";
+      slot.innerHTML=`<div class="sealed"><div class="lbl">Zalepeno</div><div class="count">${txt}</div>
+        <div class="when">Otevře se ${fmt.format(new Date(t))} v 7:00</div></div>`;
+    } else if(opened[i]){
+      if(a.dataset.state!=="open")showLetter(i);
+    } else if(a.dataset.state!=="ready"){
+      a.dataset.state="ready";
+      slot.innerHTML=`<button type="button" class="env" id="obalka-${i+1}" aria-label="Odlepit a otevřít dopis">
+        <span class="flap"></span><span class="wax">S</span><span class="hint">Je ráno. Odlep pečeť.</span></button>`;
+      const btn=slot.querySelector(".env"); btn.addEventListener("click",()=>peel(i,btn));
+    }
+  });
+}
+render(); setInterval(render,1000);
+addEventListener("hashchange",()=>location.reload());
+</script>
+</body>
+</html>
